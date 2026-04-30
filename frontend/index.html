@@ -3,130 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Compressor</title>
+    <title>像素图像工坊</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <main class="app-shell">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">Image Compressor</p>
-          <h1>图片压缩工作台</h1>
-        </div>
+        <a class="brand-mark" href="#home" aria-label="返回图像处理大厅">
+          <span class="brand-icon" aria-hidden="true"></span>
+          <span>
+            <span class="eyebrow">Image Workshop</span>
+            <strong>像素图像工坊</strong>
+          </span>
+        </a>
         <span class="api-state" id="apiState">API 检测中</span>
       </header>
 
-      <section class="summary-bar" aria-label="压缩概览">
-        <div class="summary-item">
-          <span>原始大小</span>
-          <strong id="sourceSize">-</strong>
-        </div>
-        <div class="summary-item accent">
-          <span>压缩结果</span>
-          <strong id="resultSize">-</strong>
-        </div>
-        <div class="summary-item">
-          <span>节省空间</span>
-          <strong id="savingValue">-</strong>
-        </div>
-      </section>
-
-      <section class="tool-layout">
-        <form class="control-panel" id="compressForm">
-          <label class="drop-zone" for="imageInput" id="dropZone">
-            <input id="imageInput" name="image" type="file" accept="image/*" />
-            <span class="drop-icon" aria-hidden="true">+</span>
-            <span class="drop-title">选择或拖入图片</span>
-            <span class="drop-meta" id="fileMeta">JPG, PNG, WebP</span>
-          </label>
-
-          <fieldset class="format-group">
-            <legend>输出格式</legend>
-            <label>
-              <input type="radio" name="format" value="jpeg" checked />
-              <span>JPEG</span>
-            </label>
-            <label>
-              <input type="radio" name="format" value="webp" />
-              <span>WebP</span>
-            </label>
-            <label>
-              <input type="radio" name="format" value="png" />
-              <span>PNG</span>
-            </label>
-          </fieldset>
-
-          <fieldset class="preset-group">
-            <legend>压缩档位</legend>
-            <label>
-              <input type="radio" name="qualityPreset" value="55" />
-              <span>小文件</span>
-            </label>
-            <label>
-              <input type="radio" name="qualityPreset" value="75" checked />
-              <span>推荐</span>
-            </label>
-            <label>
-              <input type="radio" name="qualityPreset" value="90" />
-              <span>高清</span>
-            </label>
-          </fieldset>
-
-          <div class="field clarity-field">
-            <label for="qualityInput">清晰度 <strong id="qualityValue">推荐 75%</strong></label>
-            <input id="qualityInput" name="quality" type="range" min="1" max="95" value="75" />
-            <div class="range-scale" aria-hidden="true">
-              <span>文件更小</span>
-              <span>画面更清晰</span>
-            </div>
+      <section class="view home-view is-active" id="homeView" aria-labelledby="homeTitle">
+        <section class="workshop-hero">
+          <div class="hero-copy">
+            <p class="season-label">春季 · 图像处理台</p>
+            <h1 id="homeTitle">挑一件小工具，开始打磨图片</h1>
+            <p class="hero-note">压缩、尺寸、格式、裁剪、水印、色彩、批量和信息清理都收进同一个工作台。</p>
           </div>
-
-          <div class="dimension-grid">
-            <label class="field" for="maxWidthInput">
-              <span>最大宽度</span>
-              <input id="maxWidthInput" name="max_width" type="number" min="1" placeholder="不限" />
-            </label>
-            <label class="field" for="maxHeightInput">
-              <span>最大高度</span>
-              <input id="maxHeightInput" name="max_height" type="number" min="1" placeholder="不限" />
-            </label>
+          <div class="pixel-farm" aria-hidden="true">
+            <span class="sun"></span>
+            <span class="cloud cloud-one"></span>
+            <span class="cloud cloud-two"></span>
+            <span class="hill hill-one"></span>
+            <span class="hill hill-two"></span>
+            <span class="farm-house"></span>
+            <span class="field-row row-one"></span>
+            <span class="field-row row-two"></span>
+            <span class="field-row row-three"></span>
           </div>
-
-          <button class="primary-button" type="submit" id="submitButton" disabled>
-            开始压缩
-          </button>
-        </form>
-
-        <section class="preview-panel" aria-label="图片预览">
-          <article class="preview-column">
-            <div class="panel-heading">
-              <h2>原图</h2>
-              <span id="sourceMeta">未选择</span>
-            </div>
-            <div class="image-frame" id="sourceFrame">
-              <img id="sourcePreview" alt="原图预览" />
-              <span id="sourceEmpty">等待图片</span>
-            </div>
-            <div class="preview-actions" aria-hidden="true"></div>
-          </article>
-
-          <article class="preview-column result-column">
-            <div class="panel-heading">
-              <h2>压缩后</h2>
-              <span id="resultMeta">未生成</span>
-            </div>
-            <div class="image-frame" id="resultFrame">
-              <img id="resultPreview" alt="压缩结果预览" />
-              <span id="resultEmpty">等待压缩</span>
-            </div>
-            <div class="preview-actions">
-              <a class="download-link" id="downloadLink" href="#" download hidden>下载图片</a>
-            </div>
-          </article>
         </section>
+
+        <section class="tool-board" aria-label="图像处理工具">
+          <button class="tool-card is-ready" type="button" data-tool="compress">
+            <span class="tool-icon compress-icon" aria-hidden="true"></span>
+            <span class="tool-name">图片压缩</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="resize">
+            <span class="tool-icon resize-icon" aria-hidden="true"></span>
+            <span class="tool-name">尺寸调整</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="convert">
+            <span class="tool-icon convert-icon" aria-hidden="true"></span>
+            <span class="tool-name">格式转换</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="crop">
+            <span class="tool-icon crop-icon" aria-hidden="true"></span>
+            <span class="tool-name">图片裁剪</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="watermark">
+            <span class="tool-icon watermark-icon" aria-hidden="true"></span>
+            <span class="tool-name">水印处理</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="color">
+            <span class="tool-icon color-icon" aria-hidden="true"></span>
+            <span class="tool-name">色彩微调</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="batch">
+            <span class="tool-icon batch-icon" aria-hidden="true"></span>
+            <span class="tool-name">批量处理</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+          <button class="tool-card is-ready" type="button" data-tool="metadata">
+            <span class="tool-icon metadata-icon" aria-hidden="true"></span>
+            <span class="tool-name">信息清理</span>
+            <span class="tool-meta">已开放</span>
+          </button>
+        </section>
+
+        <p class="workshop-message" id="workshopMessage" role="status"></p>
       </section>
 
-      <p class="message" id="message" role="status"></p>
+      <section class="view tool-view" id="toolView" aria-labelledby="toolTitle" hidden>
+        <header class="tool-header">
+          <button class="back-button" type="button" id="backHomeButton" aria-label="返回工具大厅">
+            <span aria-hidden="true">←</span>
+            工具大厅
+          </button>
+          <div>
+            <p class="season-label" id="toolKicker">工具棚</p>
+            <h1 id="toolTitle">图像处理工作台</h1>
+            <p class="tool-description" id="toolDescription"></p>
+          </div>
+        </header>
+
+        <section class="summary-bar" aria-label="处理概览">
+          <div class="summary-item">
+            <span id="sourceSummaryLabel">原始大小</span>
+            <strong id="sourceSize">-</strong>
+          </div>
+          <div class="summary-item accent">
+            <span id="resultSummaryLabel">处理结果</span>
+            <strong id="resultSize">-</strong>
+          </div>
+          <div class="summary-item">
+            <span id="thirdSummaryLabel">输出说明</span>
+            <strong id="savingValue">-</strong>
+          </div>
+        </section>
+
+        <section class="tool-layout">
+          <form class="control-panel" id="toolForm">
+            <label class="drop-zone" for="imageInput" id="dropZone">
+              <input id="imageInput" name="image" type="file" accept="image/*" />
+              <span class="drop-icon" aria-hidden="true">+</span>
+              <span class="drop-title" id="dropTitle">选择或拖入图片</span>
+              <span class="drop-meta" id="fileMeta">JPG, PNG, WebP</span>
+            </label>
+
+            <section class="source-insights" id="sourceInsights" aria-live="polite" hidden>
+              <div class="insight-head">
+                <span class="insight-kicker">原图参考</span>
+                <strong id="insightTitle">已读取图片信息</strong>
+              </div>
+              <div class="insight-grid" id="insightGrid"></div>
+              <div class="suggestion-area" id="suggestionArea"></div>
+            </section>
+
+            <div class="dynamic-controls" id="dynamicControls"></div>
+
+            <button class="primary-button" type="submit" id="submitButton" disabled>
+              开始处理
+            </button>
+          </form>
+
+          <section class="preview-panel" aria-label="图片预览">
+            <article class="preview-column">
+              <div class="panel-heading">
+                <h2 id="sourcePreviewTitle">原图</h2>
+                <span id="sourceMeta">未选择</span>
+              </div>
+              <div class="image-frame" id="sourceFrame">
+                <img id="sourcePreview" alt="原图预览" />
+                <span id="sourceEmpty">等待图片</span>
+              </div>
+              <div class="preview-actions" aria-hidden="true"></div>
+            </article>
+
+            <article class="preview-column result-column">
+              <div class="panel-heading">
+                <h2 id="resultPreviewTitle">处理后</h2>
+                <span id="resultMeta">未生成</span>
+              </div>
+              <div class="image-frame" id="resultFrame">
+                <img id="resultPreview" alt="处理结果预览" />
+                <span id="resultEmpty">等待处理</span>
+              </div>
+              <div class="preview-actions">
+                <a class="download-link" id="downloadLink" href="#" download hidden>下载结果</a>
+              </div>
+            </article>
+          </section>
+        </section>
+
+        <p class="message" id="message" role="status"></p>
+      </section>
     </main>
 
     <script src="./app.js"></script>

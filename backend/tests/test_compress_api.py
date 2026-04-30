@@ -1,4 +1,5 @@
 from io import BytesIO
+from zipfile import ZipFile
 
 from fastapi.testclient import TestClient
 from PIL import Image
@@ -67,3 +68,80 @@ def test_compress_rejects_unsupported_format() -> None:
 
     assert response.status_code == 400
     assert response.json()["detail"] == "Unsupported output format."
+
+
+def test_resize_image_exact_dimensions() -> None:
+    source = make_test_image()
+
+    response = client.post(
+        "/api/resize",
+        files={"image": ("sample.png", source, "image/png")},
+        data={"width": "30", "height": "20", "keep_aspect": "false", "format": "png"},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/png"
+
+    result = Image.open(BytesIO(response.content))
+    assert result.size == (30, 20)
+
+
+def test_crop_image() -> None:
+    source = make_test_image()
+
+    response = client.post(
+        "/api/crop",
+        files={"image": ("sample.png", source, "image/png")},
+        data={"x": "10", "y": "5", "width": "30", "height": "20", "format": "jpeg"},
+    )
+
+    assert response.status_code == 200
+    result = Image.open(BytesIO(response.content))
+    assert result.size == (30, 20)
+
+
+def test_watermark_image() -> None:
+    source = make_test_image()
+
+    response = client.post(
+        "/api/watermark",
+        files={"image": ("sample.png", source, "image/png")},
+        data={"text": "Demo", "position": "center", "format": "png"},
+    )
+
+    assert response.status_code == 200
+    result = Image.open(BytesIO(response.content))
+    assert result.size == (80, 40)
+
+
+def test_color_image() -> None:
+    source = make_test_image()
+
+    response = client.post(
+        "/api/color",
+        files={"image": ("sample.png", source, "image/png")},
+        data={"brightness": "1.2", "contrast": "1.1", "saturation": "0.8", "format": "webp"},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "image/webp"
+
+
+def test_batch_returns_zip() -> None:
+    first = make_test_image()
+    second = make_test_image()
+
+    response = client.post(
+        "/api/batch",
+        files=[
+            ("images", ("one.png", first, "image/png")),
+            ("images", ("two.png", second, "image/png")),
+        ],
+        data={"operation": "convert", "format": "jpeg"},
+    )
+
+    assert response.status_code == 200
+    assert response.headers["content-type"] == "application/zip"
+
+    archive = ZipFile(BytesIO(response.content))
+    assert archive.namelist() == ["one-convert.jpg", "two-convert.jpg"]
