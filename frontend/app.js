@@ -1227,3 +1227,54 @@ async function checkApiHealth() {
     apiState.classList.remove("ok");
   }
 }
+
+// �����л�����
+function initThemeToggle() {
+  const themeToggle = document.querySelector("#themeToggle");
+  const html = document.documentElement;
+  
+  // �ӱ��ش洢��ȡ�û�ƫ�õ�����
+  const savedTheme = localStorage.getItem("theme") || "light";
+  
+  // ��ʼ������
+  if (savedTheme === "dark") {
+    html.setAttribute("data-theme", "dark");
+    updateThemeIcon(true);
+  }
+  
+  // �����л���ť�¼�����
+  themeToggle.addEventListener("click", () => {
+    const currentTheme = html.getAttribute("data-theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    
+    html.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    updateThemeIcon(newTheme === "dark");
+  });
+  
+  // ����ϵͳ����ƫ�ñ仯
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+      // ����û�û���ֶ����ù����⣬�����ϵͳ����
+      if (!localStorage.getItem("theme")) {
+        const newTheme = e.matches ? "dark" : "light";
+        html.setAttribute("data-theme", newTheme);
+        updateThemeIcon(e.matches);
+      }
+    });
+  }
+}
+
+function updateThemeIcon(isDark) {
+  const themeToggle = document.querySelector("#themeToggle");
+  const themeIcon = themeToggle.querySelector(".theme-icon");
+  themeIcon.textContent = isDark ? "☀️" : "🌙";
+}
+
+// ��ʼ��Ӧ��
+document.addEventListener("DOMContentLoaded", () => {
+  initThemeToggle();
+  if (typeof checkApiHealth === "function") {
+    checkApiHealth();
+  }
+});

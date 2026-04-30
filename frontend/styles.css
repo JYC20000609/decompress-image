@@ -20,8 +20,28 @@
   --shadow: 0 16px 40px rgba(33, 42, 31, 0.08);
 }
 
+[data-theme="dark"] {
+  color-scheme: dark;
+  color: #e8ebe6;
+  background: #1a1f18;
+  --ink: #e8ebe6;
+  --muted: #998e99;
+  --soft: #757575;
+  --line: #2f3a2d;
+  --line-strong: #3a4938;
+  --panel: #252a23;
+  --canvas: #1f2419;
+  --green: #4db876;
+  --green-dark: #3d9962;
+  --blue: #5da3d5;
+  --amber: #d9a856;
+  --red: #d97777;
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
 * {
   box-sizing: border-box;
+  transition: background-color 200ms ease-out, color 200ms ease-out, border-color 200ms ease-out;
 }
 
 body {
@@ -32,6 +52,12 @@ body {
     linear-gradient(180deg, #eef6ee 0, transparent 360px),
     #f6f7f2;
   color: var(--ink);
+}
+
+[data-theme="dark"] body {
+  background:
+    linear-gradient(180deg, #232a20 0, transparent 360px),
+    #1a1f18;
 }
 
 button,
@@ -73,6 +99,12 @@ p {
   margin-bottom: 20px;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .brand-mark {
   display: inline-flex;
   align-items: center;
@@ -91,6 +123,43 @@ p {
   border-radius: 8px;
   background:
     linear-gradient(180deg, #dff3e4 0 52%, #f7dc96 52% 100%);
+  transition: all 200ms ease-out;
+}
+
+[data-theme="dark"] .brand-icon {
+  border-color: #3a4938;
+  background:
+    linear-gradient(180deg, #2a4a2f 0 52%, #6b5b2f 52% 100%);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 200ms ease-out;
+}
+
+.theme-toggle:hover {
+  background: var(--panel);
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: rgba(37, 42, 35, 0.8);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgba(50, 56, 48, 1);
 }
 
 .brand-icon::before {
@@ -147,6 +216,11 @@ p {
   font-size: 0.86rem;
   font-weight: 700;
   white-space: nowrap;
+  transition: all 200ms ease-out;
+}
+
+[data-theme="dark"] .api-state {
+  background: rgba(37, 42, 35, 0.6);
 }
 
 .api-state.ok {
@@ -1193,4 +1267,95 @@ p {
   .back-button {
     justify-self: start;
   }
+}
+
+/* °µÉ«Ä£Ê½ÊÊÅä */
+[data-theme="dark"] .tool-card:hover {
+  border-color: #3a4938;
+}
+
+[data-theme="dark"] .tool-icon {
+  background: #1f2819;
+}
+
+[data-theme="dark"] .sun {
+  background: #6b5b2f;
+}
+
+[data-theme="dark"] .cloud {
+  background: rgba(60, 70, 56, 0.7);
+  box-shadow:
+    18px -8px 0 rgba(60, 70, 56, 0.7),
+    38px -2px 0 rgba(60, 70, 56, 0.7);
+}
+
+[data-theme="dark"] .hill {
+  background: rgba(40, 80, 50, 0.4);
+}
+
+[data-theme="dark"] .hill-two {
+  background: rgba(50, 100, 60, 0.5);
+}
+
+[data-theme="dark"] .farm-house {
+  background: #5a4830;
+  box-shadow: inset 0 -14px 0 rgba(80, 60, 40, 0.3);
+}
+
+[data-theme="dark"] .farm-house::before {
+  background: #8b4a55;
+}
+
+[data-theme="dark"] .field-row {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(30, 80, 40, 0.5) 0 18px,
+      rgba(100, 90, 50, 0.4) 18px 30px
+    );
+}
+
+[data-theme="dark"] .brand-icon::before {
+  background: #7a5a32;
+}
+
+[data-theme="dark"] .brand-icon::after {
+  background: #a84a56;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background-color: #1f2419;
+  color: #e8ebe6;
+  border-color: #2f3a2d;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #998e99;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  outline-color: rgba(77, 184, 118, 0.3);
+  border-color: #4db876;
+}
+
+[data-theme="dark"] .preview-empty {
+  background:
+    linear-gradient(45deg, #2a3d28 25%, transparent 25%),
+    linear-gradient(-45deg, #2a3d28 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #2a3d28 75%),
+    linear-gradient(-45deg, transparent 75%, #2a3d28 75%);
+}
+
+[data-theme="dark"] button:not(.theme-toggle):not([class*="icon"]) {
+  background-color: var(--green);
+  color: #fff;
+}
+
+[data-theme="dark"] button:not(.theme-toggle):not([class*="icon"]):hover {
+  background-color: var(--green-dark);
 }
