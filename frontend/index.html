@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Compressor</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Image Compressor</p>
+          <h1>图片压缩工作台</h1>
+        </div>
+        <span class="api-state" id="apiState">API 检测中</span>
+      </header>
+
+      <section class="summary-bar" aria-label="压缩概览">
+        <div class="summary-item">
+          <span>原始大小</span>
+          <strong id="sourceSize">-</strong>
+        </div>
+        <div class="summary-item accent">
+          <span>压缩结果</span>
+          <strong id="resultSize">-</strong>
+        </div>
+        <div class="summary-item">
+          <span>节省空间</span>
+          <strong id="savingValue">-</strong>
+        </div>
+      </section>
+
+      <section class="tool-layout">
+        <form class="control-panel" id="compressForm">
+          <label class="drop-zone" for="imageInput" id="dropZone">
+            <input id="imageInput" name="image" type="file" accept="image/*" />
+            <span class="drop-icon" aria-hidden="true">+</span>
+            <span class="drop-title">选择或拖入图片</span>
+            <span class="drop-meta" id="fileMeta">JPG, PNG, WebP</span>
+          </label>
+
+          <fieldset class="format-group">
+            <legend>输出格式</legend>
+            <label>
+              <input type="radio" name="format" value="jpeg" checked />
+              <span>JPEG</span>
+            </label>
+            <label>
+              <input type="radio" name="format" value="webp" />
+              <span>WebP</span>
+            </label>
+            <label>
+              <input type="radio" name="format" value="png" />
+              <span>PNG</span>
+            </label>
+          </fieldset>
+
+          <fieldset class="preset-group">
+            <legend>压缩档位</legend>
+            <label>
+              <input type="radio" name="qualityPreset" value="55" />
+              <span>小文件</span>
+            </label>
+            <label>
+              <input type="radio" name="qualityPreset" value="75" checked />
+              <span>推荐</span>
+            </label>
+            <label>
+              <input type="radio" name="qualityPreset" value="90" />
+              <span>高清</span>
+            </label>
+          </fieldset>
+
+          <div class="field clarity-field">
+            <label for="qualityInput">清晰度 <strong id="qualityValue">推荐 75%</strong></label>
+            <input id="qualityInput" name="quality" type="range" min="1" max="95" value="75" />
+            <div class="range-scale" aria-hidden="true">
+              <span>文件更小</span>
+              <span>画面更清晰</span>
+            </div>
+          </div>
+
+          <div class="dimension-grid">
+            <label class="field" for="maxWidthInput">
+              <span>最大宽度</span>
+              <input id="maxWidthInput" name="max_width" type="number" min="1" placeholder="不限" />
+            </label>
+            <label class="field" for="maxHeightInput">
+              <span>最大高度</span>
+              <input id="maxHeightInput" name="max_height" type="number" min="1" placeholder="不限" />
+            </label>
+          </div>
+
+          <button class="primary-button" type="submit" id="submitButton" disabled>
+            开始压缩
+          </button>
+        </form>
+
+        <section class="preview-panel" aria-label="图片预览">
+          <article class="preview-column">
+            <div class="panel-heading">
+              <h2>原图</h2>
+              <span id="sourceMeta">未选择</span>
+            </div>
+            <div class="image-frame" id="sourceFrame">
+              <img id="sourcePreview" alt="原图预览" />
+              <span id="sourceEmpty">等待图片</span>
+            </div>
+            <div class="preview-actions" aria-hidden="true"></div>
+          </article>
+
+          <article class="preview-column result-column">
+            <div class="panel-heading">
+              <h2>压缩后</h2>
+              <span id="resultMeta">未生成</span>
+            </div>
+            <div class="image-frame" id="resultFrame">
+              <img id="resultPreview" alt="压缩结果预览" />
+              <span id="resultEmpty">等待压缩</span>
+            </div>
+            <div class="preview-actions">
+              <a class="download-link" id="downloadLink" href="#" download hidden>下载图片</a>
+            </div>
+          </article>
+        </section>
+      </section>
+
+      <p class="message" id="message" role="status"></p>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
