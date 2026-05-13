@@ -32,13 +32,31 @@ frontend/
 
 ## 启动后端
 
+Linux/macOS/zsh/bash：
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+如果 `python3 -m venv .venv` 提示缺少 `ensurepip`，Ubuntu/Debian 先安装：
+
+```bash
+sudo apt install python3.10-venv
+```
+
+Windows PowerShell：
+
 ```powershell
 cd backend
 .\.venv\Scripts\Activate.ps1
 uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-如果还没有安装依赖：
+如果 Windows 上还没有安装依赖：
 
 ```powershell
 cd backend
@@ -55,9 +73,9 @@ http://127.0.0.1:8000/health
 
 ## 启动前端
 
-另开一个 PowerShell：
+另开一个终端：
 
-```powershell
+```bash
 cd frontend
 python -m http.server 5173
 ```
@@ -82,6 +100,16 @@ http://127.0.0.1:5173/#metadata
 ```
 
 ## 运行测试
+
+Linux/macOS/zsh/bash：
+
+```bash
+cd backend
+source .venv/bin/activate
+pytest
+```
+
+Windows PowerShell：
 
 ```powershell
 cd backend
